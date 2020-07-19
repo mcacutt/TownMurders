@@ -3,7 +3,6 @@ package me.mcacutt.townmurders.util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
-import me.mcacutt.townmurders.util.Reflections;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -51,9 +50,9 @@ public enum Skull {
     DYNAMITE("MHF_TNT2");
 
     private static final Base64 base64 = new Base64();
-    private String id;
+    private final String id;
 
-    private Skull(String id) {
+    Skull(String id) {
         this.id = id;
     }
 

@@ -1,6 +1,5 @@
 package me.mcacutt.townmurders.players;
 
-import me.mcacutt.townmurders.players.BaseGamePlayer;
 import me.mcacutt.townmurders.roles.Roles;
 
 import java.util.ArrayList;
@@ -8,14 +7,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class Vigilante extends BaseGamePlayer {
+    private final List<UUID> visits = new ArrayList<>();
     private int shots = 3;
-    private boolean healed;
+    private boolean healed = false;
     private boolean blocked = false;
     private boolean muted = false;
-    private boolean dead = false;
+    private final boolean dead = false;
     private boolean jailed = false;
     private boolean onStand = false;
-    private final List<UUID> visits = new ArrayList<>();
 
     @Override
     public boolean guilty() {
@@ -38,22 +37,31 @@ public class Vigilante extends BaseGamePlayer {
     }
 
     @Override
-    public boolean isHealed() { return healed; }
+    public void setHealed(boolean healed) { this.healed = healed; }
 
     @Override
-    public boolean isBlocked() { return blocked; }
+    public boolean isHealed() {
+        return healed;
+    }
 
     @Override
-    public boolean hasDefense() { return false; }
+    public boolean isBlocked() {
+        return blocked;
+    }
 
     @Override
-    public void setOnStand(boolean onStand) { this.onStand = onStand; }
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 
     @Override
-    public void setBlocked(boolean blocked) { this.blocked = blocked; }
+    public boolean hasDefense() {
+        return false;
+    }
 
     @Override
-    public void addRole() { }
+    public void addRole(Roles roles) {
+    }
 
     @Override
     public Roles getRole() {
@@ -65,7 +73,9 @@ public class Vigilante extends BaseGamePlayer {
         return null;
     }
 
-    public int getRemainingShots() { return shots; }
+    public int getRemainingShots() {
+        return shots;
+    }
 
     @Override
     public void setMuted(boolean muted) {
@@ -82,12 +92,23 @@ public class Vigilante extends BaseGamePlayer {
     }
 
     @Override
-    public void setJailed(boolean jailed) { this.jailed = jailed; }
+    public boolean isJailed() {
+        return jailed;
+    }
 
     @Override
-    public boolean isJailed() { return jailed; }
+    public void setJailed(boolean jailed) {
+        this.jailed = jailed;
+    }
 
     @Override
-    public boolean isOnStand() { return onStand; }
+    public boolean isOnStand() {
+        return onStand;
+    }
+
+    @Override
+    public void setOnStand(boolean onStand) {
+        this.onStand = onStand;
+    }
 
 }

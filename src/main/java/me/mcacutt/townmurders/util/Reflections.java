@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
 public final class Reflections {
 
     // Deduce the net.minecraft.server.v* package
-    private static String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();
-    private static String NMS_PREFIX = OBC_PREFIX.replace("org.bukkit.craftbukkit", "net.minecraft.server");
-    private static String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
+    private static final String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();
+    private static final String NMS_PREFIX = OBC_PREFIX.replace("org.bukkit.craftbukkit", "net.minecraft.server");
+    private static final String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
     // Variable replacement
-    private static Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
+    private static final Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
 
     private Reflections() {
     }
@@ -338,7 +338,7 @@ public final class Reflections {
      */
     public static Class<Object> getUntypedClass(String lookupName) {
         @SuppressWarnings({"rawtypes", "unchecked"})
-        Class<Object> clazz = (Class<Object>) (Class) getClass(lookupName);
+        Class<Object> clazz = (Class<Object>) getClass(lookupName);
         return clazz;
     }
 
@@ -361,7 +361,7 @@ public final class Reflections {
          * @param arguments the arguments to pass to the constructor.
          * @return the constructed object.
          */
-        public Object invoke(Object... arguments);
+        Object invoke(Object... arguments);
     }
 
     /**
@@ -375,7 +375,7 @@ public final class Reflections {
          * @param arguments the arguments to pass to the method.
          * @return the return value, or NULL if is void.
          */
-        public Object invoke(Object target, Object... arguments);
+        Object invoke(Object target, Object... arguments);
     }
 
     /**
@@ -390,7 +390,7 @@ public final class Reflections {
          * @param target the target object, or NULL for a static field
          * @return the value of the field
          */
-        public T get(Object target);
+        T get(Object target);
 
         /**
          * Set the content of a field.
@@ -398,7 +398,7 @@ public final class Reflections {
          * @param target the target object, or NULL for a static field
          * @param value  the new value of the field
          */
-        public void set(Object target, Object value);
+        void set(Object target, Object value);
 
         /**
          * Determine if the given object has this field.
@@ -406,7 +406,7 @@ public final class Reflections {
          * @param target the object to test
          * @return TRUE if it does, FALSE otherwise
          */
-        public boolean hasField(Object target);
+        boolean hasField(Object target);
     }
 
 }
