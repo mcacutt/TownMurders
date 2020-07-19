@@ -17,19 +17,19 @@ public enum ChatChannels {
     private final String name;
     private final Set<UUID> players = new HashSet<>();
 
-    ChatChannels(String name){
+    ChatChannels(String name) {
         this.name = name;
     }
 
-    public void addToChannel(UUID uuid){
+    public void addToChannel(UUID uuid) {
         players.add(uuid);
     }
 
-    public void removeFromChannel(UUID uuid){
+    public void removeFromChannel(UUID uuid) {
         players.remove(uuid);
     }
 
-    public boolean inChannel(UUID uuid){
+    public boolean inChannel(UUID uuid) {
         return players.contains(uuid);
     }
 
@@ -37,7 +37,7 @@ public enum ChatChannels {
         return name;
     }
 
-    public void sendMessage(String message){
+    public void sendMessage(String message) {
         players.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage(message));
     }
 

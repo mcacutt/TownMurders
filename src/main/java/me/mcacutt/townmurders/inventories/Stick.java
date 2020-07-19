@@ -1,11 +1,10 @@
 package me.mcacutt.townmurders.inventories;
 
 import me.mattstudios.mfgui.gui.components.ItemBuilder;
+import me.mcacutt.townmurders.ListenerBase;
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.roles.Roles;
-import me.mcacutt.townmurders.roles.good.Jailor;
 import me.mcacutt.townmurders.util.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,16 +15,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Stick implements Listener {
+public class Stick extends ListenerBase {
 
-    private final TownMurders plugin;
     public Stick(final TownMurders plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     public ItemStack getStick() {
         return new ItemBuilder(Material.STICK)
-        .setName(ChatColor.GOLD + "Target Stick").build();
+                .setName(ChatColor.GOLD + "Target Stick").build();
     }
 
     public void removeStick(Player player) {
@@ -35,7 +33,7 @@ public class Stick implements Listener {
     @EventHandler
     public void playerTeleport(PlayerTeleportEvent event) {
         boolean day = Utils.isDay(event.getPlayer().getWorld());
-        if(!(plugin.getPlayerManager().getBasePlayer(event.getPlayer().getUniqueId()).getRole() == Roles.WHISPERER)) {
+        if (!(plugin.getPlayerManager().getBasePlayer(event.getPlayer().getUniqueId()).getRole() == Roles.WHISPERER)) {
             if (day) {
                 boolean b1 = plugin.getPlayerManager().getBasePlayer(event.getPlayer().getUniqueId()).getRole() == Roles.JAILOR;
                 if (!b1) {
@@ -47,7 +45,7 @@ public class Stick implements Listener {
                     event.getPlayer().getInventory().addItem(getStick());
                 } else {
                     removeStick(event.getPlayer());
-               }
+                }
             }
         }
     }

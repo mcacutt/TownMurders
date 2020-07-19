@@ -1,0 +1,11 @@
+main: me.mcacutt.townmurders.TownMurders
+name: Mafia
+version: 1.0.0
+api-version: 1.8
+author: DadisonQuack
+commands:
+  mafia:
+  revote:
+permission-message: Stop being an entitled simp
+
+
