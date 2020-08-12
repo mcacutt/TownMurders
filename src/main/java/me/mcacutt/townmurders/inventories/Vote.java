@@ -8,7 +8,6 @@ import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.util.Skull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -35,6 +34,7 @@ public class Vote extends ListenerBase {
     }
 
     public Gui getGui() {
+        addSkull();
         return gui;
     }
 
@@ -44,24 +44,19 @@ public class Vote extends ListenerBase {
                     player.getDisplayName()
             )).setName(player.getDisplayName()).build(), event -> {
                 event.setCancelled(true);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        Player player = (Player) event.getWhoClicked();
-                        Player target = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName());
-                        if (player == target) {
-                            player.sendMessage("You can't vote for yourself silly!");
-                            return;
-                        }
-                        vote(player, target);
-                        if (votes(target) >= (Math.ceil(plugin.getPlayerManager().getPlayersAlive().size()) / 2)) {
-                            plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).setOnStand(true);
-                            plugin.getSpawnPoints().tpPlayerToStand(target);
-                        }
-                        plugin.getVoteSequence().getVoteCountdown().pause();
-                        plugin.getStandSequence().start();
-                    }
-                };
+                Player player1 = (Player) event.getWhoClicked();
+                Player target = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName());
+                if (player1 == target) {
+                    player1.sendMessage("You can't vote for yourself silly!");
+                    return;
+                }
+                vote(player1, target);
+                if (votes(target) >= (Math.ceil(plugin.getPlayerManager().getPlayersAlive().size()) / 2)) {
+                    plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).setOnStand(true);
+                    plugin.getSpawnPoints().tpPlayerToStand(target);
+                }
+                plugin.getVoteSequence().getVoteCountdown().pause();
+                plugin.getStandSequence().start();
             }
             ));
         }

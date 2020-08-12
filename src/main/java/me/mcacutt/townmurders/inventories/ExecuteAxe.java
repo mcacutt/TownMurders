@@ -29,11 +29,10 @@ public class ExecuteAxe extends ListenerBase {
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
-        if (!(event.getAction() == Action.RIGHT_CLICK_AIR && event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            return;
-        }
+        if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
         if (event.getPlayer().getInventory().getItemInHand().isSimilar(getAxe())) {
             Roles.JAILOR.getRoleAction().get().runRoleTask(event.getPlayer(), null);
+        }
         }
     }
 

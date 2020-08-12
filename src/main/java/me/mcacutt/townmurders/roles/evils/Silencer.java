@@ -1,7 +1,7 @@
 package me.mcacutt.townmurders.roles.evils;
 
 import me.mcacutt.townmurders.TownMurders;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.players.Mafia;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class Silencer extends RoleActionBase {
+public class Silencer extends Mafia {
 
     private final TownMurders plugin;
 

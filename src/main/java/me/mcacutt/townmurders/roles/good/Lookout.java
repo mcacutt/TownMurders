@@ -1,7 +1,7 @@
 package me.mcacutt.townmurders.roles.good;
 
 import me.mcacutt.townmurders.TownMurders;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.players.Townie;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class Lookout extends RoleActionBase {
+public class Lookout extends Townie {
 
     private final TownMurders plugin;
 

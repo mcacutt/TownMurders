@@ -3,9 +3,9 @@ package me.mcacutt.townmurders.roles.evils;
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.arena.Lobby;
 import me.mcacutt.townmurders.arena.SpawnPoints;
-import me.mcacutt.townmurders.files.DataManager;
+import me.mcacutt.townmurders.players.Mafia;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.roles.Role;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,8 +14,9 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class Kingpin extends RoleActionBase {
+public class Kingpin extends Mafia {
 
     private final TownMurders plugin;
     private Player kingpinTarget;
@@ -23,6 +24,14 @@ public class Kingpin extends RoleActionBase {
     public Kingpin(final TownMurders plugin) {
         this.plugin = plugin;
     }
+
+    @Override
+    public boolean guilty() {
+        return false;
+    }
+
+    @Override
+    public Role getRole() { return Role.KINGPIN; }
 
     public static void giveBook(Player player) {
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);

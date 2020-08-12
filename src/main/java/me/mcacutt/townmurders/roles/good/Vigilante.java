@@ -3,10 +3,8 @@ package me.mcacutt.townmurders.roles.good;
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.arena.Lobby;
 import me.mcacutt.townmurders.arena.SpawnPoints;
-import me.mcacutt.townmurders.files.DataManager;
 import me.mcacutt.townmurders.players.Townie;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
-import me.mcacutt.townmurders.roles.RoleActionBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,9 +14,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class Vigilante extends RoleActionBase {
+public class Vigilante extends Townie {
 
     private final TownMurders plugin;
+    private int shots = 3;
 
     public Vigilante(final TownMurders plugin) {
         this.plugin = plugin;
@@ -47,12 +46,16 @@ public class Vigilante extends RoleActionBase {
         player.getInventory().addItem(book);
     }
 
+    public int getRemainingShots() {
+        return shots;
+    }
+    public void removeShot() { shots--; }
+
     public void runRoleTask(Player player, Player target) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                me.mcacutt.townmurders.players.Vigilante vigilante = (me.mcacutt.townmurders.players.Vigilante) plugin.getPlayerManager().getBasePlayer(player.getUniqueId());
-                if (vigilante.getRemainingShots() == 0) {
+                if (getRemainingShots() == 0) {
                     return;
                 }
                 if (!plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).isHealed()) {
@@ -72,10 +75,10 @@ public class Vigilante extends RoleActionBase {
                     target.sendMessage("You Were Attacked But Someone Nursed You Back To Health");
                     plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).setHealed(false);
                 }
-                vigilante.removeShot();
-                if (plugin.getPlayerManager().getBasePlayer(target.getUniqueId()) instanceof Townie || plugin.getPlayerManager().getBasePlayer(target.getUniqueId()) instanceof me.mcacutt.townmurders.players.Vigilante) {
+                removeShot();
+                if (player instanceof Townie) {
                     player.setHealth(0);
-                    SpawnPoints spawns = new SpawnPoints( plugin);
+                    SpawnPoints spawns = new SpawnPoints(plugin);
                     spawns.tpPlayerToSpec(player);
                     plugin.getPlayerManager().getPlayersDead().add(player);
                     plugin.getPlayerManager().getPlayersDeadLastNight().add(player);

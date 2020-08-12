@@ -1,8 +1,10 @@
 package me.mcacutt.townmurders;
 
-import me.mattstudios.mf.annotations.*;
+import me.mattstudios.mf.annotations.Command;
+import me.mattstudios.mf.annotations.Default;
+import me.mattstudios.mf.annotations.Permission;
+import me.mattstudios.mf.annotations.SubCommand;
 import me.mattstudios.mf.base.CommandBase;
-import me.mcacutt.townmurders.files.DataManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;

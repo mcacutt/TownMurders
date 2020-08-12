@@ -1,7 +1,7 @@
 package me.mcacutt.townmurders.roles.good;
 
 import me.mcacutt.townmurders.TownMurders;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.players.Townie;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,12 +10,9 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import java.util.ArrayList;
 
-public class Whisperer extends RoleActionBase {
-
-    private final TownMurders plugin;
+public class Whisperer extends Townie {
 
     public Whisperer(final TownMurders plugin) {
-        this.plugin = plugin;
     }
 
     public static void giveBook(Player player) {
@@ -37,9 +34,5 @@ public class Whisperer extends RoleActionBase {
         bookMeta.setPages(pages);
         book.setItemMeta(bookMeta);
         player.getInventory().addItem(book);
-    }
-
-    @Override
-    public void runRoleTask(Player player, Player target) {
     }
 }

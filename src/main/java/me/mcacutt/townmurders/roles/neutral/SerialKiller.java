@@ -4,8 +4,8 @@ import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.arena.Lobby;
 import me.mcacutt.townmurders.arena.SpawnPoints;
 import me.mcacutt.townmurders.files.DataManager;
+import me.mcacutt.townmurders.players.Neutral;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
-import me.mcacutt.townmurders.roles.RoleActionBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,12 +15,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class SerialKiller extends RoleActionBase {
+public class SerialKiller extends Neutral {
 
-    private final TownMurders plugin;
+    private final TownMurders plugin;;
 
     public SerialKiller(final TownMurders plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public boolean guilty() {
+        return true;
+    }
+
+    @Override
+    public boolean hasDefense() {
+        return true;
     }
 
     public static void giveBook(Player player) {

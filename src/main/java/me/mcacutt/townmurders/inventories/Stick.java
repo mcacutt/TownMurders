@@ -3,13 +3,13 @@ package me.mcacutt.townmurders.inventories;
 import me.mattstudios.mfgui.gui.components.ItemBuilder;
 import me.mcacutt.townmurders.ListenerBase;
 import me.mcacutt.townmurders.TownMurders;
+import me.mcacutt.townmurders.roles.Role;
 import me.mcacutt.townmurders.roles.Roles;
 import me.mcacutt.townmurders.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -35,11 +35,11 @@ public class Stick extends ListenerBase {
         final Player player = event.getPlayer();
         player.getInventory().clear();
         final boolean day = Utils.isDay(player.getWorld());
-        final Roles roles = plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).getRole();
-        if (roles == Roles.WHISPERER) {
+        final Role roles = plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).getRole();
+        if (roles == Role.WHISPERER) {
             return;
         }
-        final boolean jailor = roles == Roles.JAILOR;
+        final boolean jailor = roles == Role.JAILOR;
         if (day) {
             if (jailor) {
                 player.getInventory().addItem(getStick());
@@ -57,7 +57,7 @@ public class Stick extends ListenerBase {
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
-        if (!(event.getAction() == Action.RIGHT_CLICK_AIR && event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+        if ((event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)) {
             return;
         }
         if (event.getPlayer().getInventory().getItemInHand().isSimilar(getStick())) {

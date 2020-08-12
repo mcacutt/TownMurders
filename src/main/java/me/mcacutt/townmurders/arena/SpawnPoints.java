@@ -8,13 +8,14 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class SpawnPoints {
 
     private final TownMurders plugin;
 
-    public final Map<Player, Location> mapSpawns = new HashMap<>();
-    private final Map<Player, Location> mapHomes = new HashMap<>();
+    public final Map<UUID, Location> mapSpawns = new HashMap<>();
+    private final Map<UUID, Location> mapHomes = new HashMap<>();
 
     public SpawnPoints(TownMurders plugin) {
         this.plugin = plugin;
@@ -44,35 +45,41 @@ public class SpawnPoints {
 
     public void assignSpawns() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            for (int i = 0; getSpawns().size() > i; i++) {
-               if (!mapSpawns.containsKey(player)) {
-                   mapSpawns.put(player, getSpawns().get(i));
-               }
+            int i = 0;
+            while (mapSpawns.get(player.getUniqueId()) == null) {
+                Location value = getSpawns().get(i);
+                if (!(mapSpawns.containsValue(value))) {
+                    mapSpawns.put(player.getUniqueId(), getSpawns().get(i));
+                    System.out.print(getSpawns().get(i));
+                } else i++;
             }
         }
     }
 
-    public void assignHomes() {
+    public void assignHomes () {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            for (int i = 0; getHomes().size() > i; i++) {
-                if (!mapHomes.containsKey(player)) {
-                    mapHomes.put(player, getHomes().get(i));
-                }
+            int i = 0;
+            while (mapHomes.get(player.getUniqueId()) == null) {
+                if (!(mapHomes.containsValue(getHomes().get(i)))) {
+                    mapHomes.put(player.getUniqueId(), getHomes().get(i));
+                    System.out.print(getHomes().get(i));
+                } else i++;
             }
         }
     }
+
 
     public void tpPlayersToSpawns() {
         for (Player player : Bukkit.getOnlinePlayers())
             if (!plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).isDead()) {
-                player.teleport(mapSpawns.get(player));
+                player.teleport(mapSpawns.get(player.getUniqueId()));
             }
     }
 
     public void tpPlayersToHomes() {
         for (Player player : Bukkit.getOnlinePlayers())
             if (!plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).isDead()) {
-                player.teleport(mapHomes.get(player));
+                player.teleport(mapHomes.get(player.getUniqueId()));
             }
     }
 

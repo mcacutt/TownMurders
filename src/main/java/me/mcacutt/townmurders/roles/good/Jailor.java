@@ -3,9 +3,8 @@ package me.mcacutt.townmurders.roles.good;
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.arena.Lobby;
 import me.mcacutt.townmurders.arena.SpawnPoints;
-import me.mcacutt.townmurders.files.DataManager;
+import me.mcacutt.townmurders.players.Townie;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
-import me.mcacutt.townmurders.roles.RoleActionBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,8 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class Jailor extends RoleActionBase {
+public class Jailor extends Townie {
 
     private final TownMurders plugin;
     private Player jailedTarget;
@@ -51,7 +51,8 @@ public class Jailor extends RoleActionBase {
         this.jailedTarget = jailedTarget;
     }
 
-    private void run(Player player) {
+    private void runRoleTask2(Player player, Player jailedTarget) {
+        this.jailedTarget = jailedTarget;
         if (jailedTarget == null) return;
         jailedTarget.setHealth(0);
         SpawnPoints spawns = new SpawnPoints(plugin);
@@ -64,10 +65,5 @@ public class Jailor extends RoleActionBase {
         ChatChannels.DEAD.addToChannel(jailedTarget.getUniqueId());
         if (Lobby.serialKiller == jailedTarget.getUniqueId()) Lobby.serialKiller = null;
         plugin.getPlayerManager().getTownies().remove(jailedTarget);
-    }
-
-    @Override
-    public void runRoleTask(Player player, Player target) {
-        run(player);
     }
 }

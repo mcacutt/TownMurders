@@ -11,8 +11,6 @@ import me.mcacutt.townmurders.util.Skull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -32,6 +30,7 @@ public class Target extends ListenerBase {
     }
 
     public Gui getGui() {
+        addSkull();
         return gui;
     }
 
@@ -42,26 +41,21 @@ public class Target extends ListenerBase {
                     player.getDisplayName()
             )).setName(player.getDisplayName()).build(), event -> {
                 event.setCancelled(true);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        Player player = (Player) event.getWhoClicked();
-                        Player target = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName());
-                        Roles role = plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).getRole();
-                        if (target.getDisplayName() == "Barrier Block") {
-                            gui.close(player);
-                            return;
-                        }
-                        if (player == target && role != Roles.MEDIC && role != Roles.HUNTER) {
-                            player.sendMessage("You can't target yourself silly!");
-                            gui.close(player);
-                        } else if (plugin.getPlayerManager().getBasePlayer(event.getWhoClicked().getUniqueId()).getRole() == Roles.JAILOR) {
-                            roleVisits.put(player, target);
-                            ((Jailor) Roles.JAILOR.getRoleAction().get()).setJailedTarget(getTarget(player));
-                        } else {
-                            roleVisits.put(player, target);
-                        }
-                    }
+                Player player1 = (Player) event.getWhoClicked();
+                Player target = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName());
+                Roles role = plugin.getPlayerManager().getBasePlayer(player1.getUniqueId()).getRole();
+                if (target.getDisplayName().equals("Barrier Block")) {
+                    gui.close(player1);
+                    return;
+                }
+                if (player1 == target && role != Roles.MEDIC && role != Roles.HUNTER) {
+                    player1.sendMessage("You can't target yourself silly!");
+                    gui.close(player);
+                } else if (plugin.getPlayerManager().getBasePlayer(event.getWhoClicked().getUniqueId()).getRole() == Roles.JAILOR) {
+                    roleVisits.put(player1, target);
+                    ((Jailor) Roles.JAILOR.getRoleAction().get()).setJailedTarget(getTarget(player1));
+                } else {
+                    roleVisits.put(player1, target);
                 };
             }
             ));

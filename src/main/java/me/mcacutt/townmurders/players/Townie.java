@@ -1,41 +1,34 @@
 package me.mcacutt.townmurders.players;
 
-import me.mcacutt.townmurders.roles.Roles;
+import me.mcacutt.townmurders.roles.Role;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class Townie extends BaseGamePlayer {
-    private final UUID uuid;
-    private final Random rand = new Random();
-    private final List<Roles> filtered = Arrays.stream(Roles.values()).filter(roles -> {
-            if (roles.isGood().isPresent()) {
-        return roles.isGood().get();
-    }
-        return false;
-}).collect(Collectors.toList());
-    private final List<UUID> visits = Collections.emptyList();
-    private Roles role;
+
+    private List<UUID> visits = Collections.emptyList();
+    private Role role;
     private boolean healed = false;
     private boolean blocked = false;
     private boolean muted = false;
     private boolean jailed = false;
     private boolean onStand = false;
+    private boolean defense = false;
 
-    public Townie(UUID uuid) {
-        this.uuid = uuid;
-    }
+    @Override
+    public String getTeam() { return "Townie"; }
 
     @Override
     public boolean guilty() {
         return false;
     }
+    @Override
+    public Role getRole() { return Role.ADVISOR; }
 
     @Override
-    public List<UUID> getVisits() {
-        return visits;
-    }
-
+    public List<UUID> getVisits() { return visits; }
     @Override
     public void addVisit(UUID uuid) {
         visits.add(uuid);
@@ -50,12 +43,13 @@ public class Townie extends BaseGamePlayer {
     public boolean isHealed() {
         return healed;
     }
+    @Override
+    public void setHealed(boolean healed) { this.healed = healed; }
 
     @Override
     public boolean isBlocked() {
         return blocked;
     }
-
     @Override
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
@@ -65,31 +59,15 @@ public class Townie extends BaseGamePlayer {
     public boolean hasDefense() {
         return false;
     }
-
     @Override
-    public void setHealed(boolean healed) { this.healed = healed; }
-
-    @Override
-    public void addRole(Roles roles) {
-        int result = rand.nextInt(filtered.size() - 1);
-        role = filtered.get(result);
-    }
-
-    @Override
-    public Roles getRole() {
-        return role;
-    }
-
-    @Override
-    public UUID getUUID() {
-        return uuid;
+    public void setDefense(boolean defense) {
+        this.defense = defense;
     }
 
     @Override
     public void setMuted(boolean muted) {
         this.muted = muted;
     }
-
     @Override
     public boolean muted() {
         return muted;
@@ -99,7 +77,6 @@ public class Townie extends BaseGamePlayer {
     public boolean isJailed() {
         return jailed;
     }
-
     @Override
     public void setJailed(boolean jailed) {
         this.jailed = jailed;
@@ -109,7 +86,6 @@ public class Townie extends BaseGamePlayer {
     public boolean isOnStand() {
         return onStand;
     }
-
     @Override
     public void setOnStand(boolean onStand) {
         this.onStand = onStand;

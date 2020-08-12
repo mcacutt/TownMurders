@@ -1,7 +1,8 @@
 package me.mcacutt.townmurders.roles.evils;
 
 import me.mcacutt.townmurders.TownMurders;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.players.Mafia;
+import me.mcacutt.townmurders.roles.Role;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,13 +12,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class Distractor extends RoleActionBase {
+public class Distractor extends Mafia {
 
     private final TownMurders plugin;
 
     public Distractor(final TownMurders plugin) {
         this.plugin = plugin;
     }
+
+    @Override
+    public Role getRole() { return Role.DISTRACTOR; }
 
     public static void giveBook(Player player) {
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);

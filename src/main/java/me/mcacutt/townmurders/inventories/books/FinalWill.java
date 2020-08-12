@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -46,7 +45,7 @@ public class FinalWill extends ListenerBase {
 
     public void givePlayerDeadWill(Player deadPlayer) {
         for (ItemStack item : deadPlayer.getInventory()) {
-            if (!(item.getItemMeta().getDisplayName() == "My Last Will")) {
+            if (!(item.getItemMeta().getDisplayName().equals("My Last Will"))) {
                 return;
             }
             for (UUID uuid : plugin.getPlayerManager().getPlayersInGame()) {

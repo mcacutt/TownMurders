@@ -32,11 +32,10 @@ public class ArrowListener extends ListenerBase {
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
-        if (!(event.getAction() == Action.RIGHT_CLICK_AIR && event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            return;
-        }
+        if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
         if (event.getPlayer().getInventory().getItemInHand().isSimilar(getArrow())) {
             plugin.getVote().getGui().open(event.getPlayer());
+        }
         }
     }
 }

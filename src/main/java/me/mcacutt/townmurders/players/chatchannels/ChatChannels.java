@@ -1,9 +1,7 @@
 package me.mcacutt.townmurders.players.chatchannels;
 
-import io.netty.util.internal.ConcurrentSet;
 import org.bukkit.Bukkit;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,9 +31,7 @@ public enum ChatChannels {
         return playersInChannel.contains(uuid);
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public void sendMessage(String message) {
         playersInChannel.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage(message));

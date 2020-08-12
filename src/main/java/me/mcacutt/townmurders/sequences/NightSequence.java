@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +41,6 @@ public class NightSequence {
         }
 
         Countdown nightCountdown = Countdown.of(completeTask -> {
-            setNightCount(plugin.getNightSequence().getNightCount() + 1);
             plugin.getDaySequence().setDayCount(plugin.getDaySequence().getDayCount() + 1);
             plugin.getEndOfNightSequence().start();
             completeTask.cancel();

@@ -47,7 +47,6 @@ public class StandSequence {
                     if (Lobby.serialKiller == player.getUniqueId())
                         Lobby.serialKiller = null;
                     plugin.getPlayerManager().getTownies().remove(player);
-
                     if (plugin.getPlayerManager().getEvils().isEmpty() &&
                             Lobby.serialKiller == null) {
                         plugin.getWinSequence().townWin();

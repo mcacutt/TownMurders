@@ -1,7 +1,7 @@
 package me.mcacutt.townmurders.roles.good;
 
 import me.mcacutt.townmurders.TownMurders;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.players.Townie;
 import me.mcacutt.townmurders.roles.Roles;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class Investigator extends RoleActionBase {
+public class Investigator extends Townie {
 
     private final TownMurders plugin;
 

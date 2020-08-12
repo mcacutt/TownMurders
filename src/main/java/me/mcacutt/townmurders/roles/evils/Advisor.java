@@ -1,7 +1,8 @@
 package me.mcacutt.townmurders.roles.evils;
 
 import me.mcacutt.townmurders.TownMurders;
-import me.mcacutt.townmurders.roles.RoleActionBase;
+import me.mcacutt.townmurders.players.Mafia;
+import me.mcacutt.townmurders.roles.Role;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,13 +12,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class Advisor extends RoleActionBase {
+public class Advisor extends Mafia {
 
     private final TownMurders plugin;
 
     public Advisor(final TownMurders plugin) {
         this.plugin = plugin;
     }
+
+    @Override
+    public Role getRole() { return Role.ADVISOR; }
 
     public static void giveBook(Player player) {
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
@@ -46,7 +50,7 @@ public class Advisor extends RoleActionBase {
         new BukkitRunnable() {
             @Override
             public void run() {
-                String targetRole = plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole().getName();
+                String targetRole = plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole().getRoleName();
                 player.sendMessage("The Role Of Your Target Is: " + targetRole);
             }
         };
