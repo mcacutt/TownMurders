@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class Townie extends BaseGamePlayer {
+public class Townie implements BaseGamePlayer {
 
     private List<UUID> visits = Collections.emptyList();
     private Role role;

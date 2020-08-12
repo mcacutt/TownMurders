@@ -45,17 +45,12 @@ public class Hunter extends Townie {
     }
 
     public void runRoleTask(Player player, Player target, Player left, Player right) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 if (plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).guilty() ||
                         plugin.getPlayerManager().getBasePlayer(left.getUniqueId()).guilty() ||
                         plugin.getPlayerManager().getBasePlayer(right.getUniqueId()).guilty()) {
                     player.sendMessage("You Found Someone In The Area Acting Suspicious");
                 }
                 player.sendMessage("You Found No Suspicious Behaviour In The Area");
-            }
-        };
     }
 }
 

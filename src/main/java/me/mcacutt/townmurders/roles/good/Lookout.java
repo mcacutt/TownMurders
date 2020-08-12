@@ -44,12 +44,8 @@ public class Lookout extends Townie {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 player.sendMessage(plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getVisits()
                         .stream().map(Bukkit::getPlayer).map(Player::getName).collect(Collectors.joining(", ")) + " Visited Your Target");
-            }
-        };
     }
+
 }

@@ -57,9 +57,6 @@ public class SerialKiller extends Neutral {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 target.setHealth(0);
                 DataManager data = new DataManager(plugin);
                 SpawnPoints spawns = new SpawnPoints(plugin);
@@ -72,7 +69,6 @@ public class SerialKiller extends Neutral {
                 ChatChannels.DEAD.addToChannel(target.getUniqueId());
                 if (Lobby.serialKiller == target.getUniqueId()) Lobby.serialKiller = null;
                 plugin.getPlayerManager().getTownies().remove(target);
-            }
-        };
     }
+
 }

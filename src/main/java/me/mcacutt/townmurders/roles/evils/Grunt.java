@@ -11,7 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
@@ -54,9 +53,6 @@ public class Grunt extends Mafia {
 
     public void runRoleTask(Player player, Player target) {
         final AtomicReference<Player> kingpinTarget = new AtomicReference<>(target);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 if (!((Role.KINGPIN.getBaseGamePlayer().getRole()) == null)) {
                     kingpinTarget.set(Kingpin.getKingpinTarget());
                 }
@@ -71,8 +67,6 @@ public class Grunt extends Mafia {
                 ChatChannels.DEAD.addToChannel(((Player) kingpinTarget).getUniqueId());
                 if (Lobby.serialKiller == ((Player) kingpinTarget).getUniqueId()) Lobby.serialKiller = null;
                 plugin.getPlayerManager().getTownies().remove(kingpinTarget);
-            }
-        };
     }
 
 }

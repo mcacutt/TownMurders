@@ -41,12 +41,8 @@ public class Medic extends Townie {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).setHealed(true);
-            }
-        };
     }
+
 }
 

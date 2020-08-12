@@ -48,11 +48,7 @@ public class Distractor extends Mafia {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).setBlocked(true);
-            }
-        };
     }
+
 }

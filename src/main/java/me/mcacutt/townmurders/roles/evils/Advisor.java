@@ -47,12 +47,8 @@ public class Advisor extends Mafia {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 String targetRole = plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole().getRoleName();
                 player.sendMessage("The Role Of Your Target Is: " + targetRole);
-            }
-        };
     }
+
 }

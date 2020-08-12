@@ -43,11 +43,7 @@ public class Silencer extends Mafia {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).setMuted(true);
-            }
-        };
     }
+
 }

@@ -52,9 +52,6 @@ public class Vigilante extends Townie {
     public void removeShot() { shots--; }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 if (getRemainingShots() == 0) {
                     return;
                 }
@@ -89,7 +86,6 @@ public class Vigilante extends Townie {
                     plugin.getPlayerManager().getTownies().remove(player);
                     player.sendMessage("You Shot A Town Member And Died Of Grief");
                 }
-            }
-        };
     }
+
 }

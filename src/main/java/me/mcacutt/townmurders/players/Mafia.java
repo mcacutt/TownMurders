@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class Mafia extends BaseGamePlayer {
+public class Mafia implements BaseGamePlayer {
 
     private final Random rand = new Random();
     private List<UUID> visits = new ArrayList<>();

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class Neutral extends BaseGamePlayer {
+public class Neutral implements BaseGamePlayer {
 
     private final Random rand = new Random();
     private List<UUID> visits = new ArrayList<>();

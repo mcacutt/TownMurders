@@ -60,9 +60,6 @@ public class Kingpin extends Mafia {
 
     public void runRoleTask(Player player, Player target) {
         kingpinTarget = target;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 if (!plugin.getPlayerManager().getRolesList().contains("GRUNT")) {
                     target.setHealth(0);
                     SpawnPoints spawns = new SpawnPoints(plugin);
@@ -77,8 +74,6 @@ public class Kingpin extends Mafia {
                     plugin.getPlayerManager().getTownies().remove(target);
                 }
             }
-        };
-    }
 
     public Player getKingpinTarget() {
         return this.kingpinTarget;

@@ -43,9 +43,6 @@ public class Investigator extends Townie {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 Roles targetRole = plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole();
                 if (targetRole == Roles.DISTRACTOR || targetRole == Roles.ESCORT || targetRole == Roles.LOOKOUT) {
                     player.sendMessage("Your Target Could Be A Distractor, Escort or Lookout");
@@ -61,8 +58,6 @@ public class Investigator extends Townie {
                 }
                 if (targetRole == Roles.HUNTER || targetRole == Roles.MEDIC || targetRole == Roles.SERIAL_KILLER) {
                     player.sendMessage("Your Target Could Be A Hunter, Medic or Serial Killer");
-                }
-            }
         };
     }
 }

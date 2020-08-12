@@ -4,7 +4,6 @@ import me.mattstudios.mfgui.gui.components.ItemBuilder;
 import me.mcacutt.townmurders.ListenerBase;
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.roles.Role;
-import me.mcacutt.townmurders.roles.Roles;
 import me.mcacutt.townmurders.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Stick extends ListenerBase {
 
-    public Stick(final TownMurders plugin) {
+    public Stick(TownMurders plugin) {
         super(plugin);
     }
 
@@ -31,15 +30,15 @@ public class Stick extends ListenerBase {
     }
 
     @EventHandler
-    public void playerTeleport(final PlayerTeleportEvent event) {
-        final Player player = event.getPlayer();
+    public void playerTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
         player.getInventory().clear();
         final boolean day = Utils.isDay(player.getWorld());
         final Role roles = plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).getRole();
         if (roles == Role.WHISPERER) {
             return;
         }
-        final boolean jailor = roles == Role.JAILOR;
+        boolean jailor = roles == Role.JAILOR;
         if (day) {
             if (jailor) {
                 player.getInventory().addItem(getStick());

@@ -42,13 +42,9 @@ public class Sheriff extends Townie {
     }
 
     public void runRoleTask(Player player, Player target) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 if (plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).guilty())
                     player.sendMessage("Your Target Seems Suspicious");
                 else player.sendMessage("Your Target Seems Innocent");
-            }
-        };
     }
+
 }
