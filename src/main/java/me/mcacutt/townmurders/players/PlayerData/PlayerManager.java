@@ -8,6 +8,7 @@ import me.mcacutt.townmurders.util.Utils;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PlayerManager {
 
@@ -17,8 +18,9 @@ public class PlayerManager {
     private final List<Player> playersAlive = Utils.newPlayerSyncList();
     private final List<Player> playersDeadLastNight = Utils.newPlayerSyncList();
     private final List<Player> playersInLobby = Utils.newPlayerSyncList();
-    private final Set<Mafia> evils = Collections.synchronizedSet(new HashSet<>());
-    private final Set<Townie> goods = Collections.synchronizedSet(new HashSet<>());
+    private final List<BaseGamePlayer> players = Collections.synchronizedList(new CopyOnWriteArrayList<>());
+    private final Set<UUID> evils = Collections.synchronizedSet(new HashSet<>());
+    private final Set<UUID> goods = Collections.synchronizedSet(new HashSet<>());
     private Map<UUID, BaseGamePlayer> roles = Collections.synchronizedMap(new HashMap<>());
 
     public List<UUID> getPlayersInGame() {
@@ -42,11 +44,12 @@ public class PlayerManager {
         return this.rolesList;
     }
 
-    public Set<Mafia> getEvils() {return evils; }
-    public Set<Townie> getTownies() { return goods; }
-    
+    public Set<UUID> getEvils() {return evils; }
+    public Set<UUID> getTownies() { return goods; }
+
     public BaseGamePlayer getBasePlayer(UUID uuid) {
-        Optional<BaseGamePlayer> optional = playerNumber.stream().filter(baseGamePlayer -> baseGamePlayer.getUUID() == uuid).findFirst();
+        Optional<BaseGamePlayer> optional = players.stream().filter(baseGamePlayer ->
+                baseGamePlayer.getUUID() == uuid).findFirst();
         return optional.orElse(null);
     }
 }

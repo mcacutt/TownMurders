@@ -52,20 +52,20 @@ public class Grunt extends Mafia {
     }
 
     public void runRoleTask(Player player, Player target) {
-        final AtomicReference<Player> kingpinTarget = new AtomicReference<>(target);
+        Player kingpinTarget = target;
                 if (!((Role.KINGPIN.getBaseGamePlayer().getRole()) == null)) {
-                    kingpinTarget.set(Kingpin.getKingpinTarget());
+                    kingpinTarget = Kingpin.getKingpinTarget();
                 }
-                kingpinTarget.get().setHealth(0);
+                kingpinTarget.setHealth(0);
                 SpawnPoints spawns = new SpawnPoints(plugin);
-                spawns.tpPlayerToSpec((Player) kingpinTarget);
-                plugin.getPlayerManager().getPlayersDead().add((Player) kingpinTarget);
+                spawns.tpPlayerToSpec(kingpinTarget);
+                plugin.getPlayerManager().getPlayersDead().add(kingpinTarget);
                 plugin.getPlayerManager().getPlayersAlive().remove(kingpinTarget);
-                plugin.getPlayerManager().getPlayersDeadLastNight().add((Player) kingpinTarget);
+                plugin.getPlayerManager().getPlayersDeadLastNight().add(kingpinTarget);
                 plugin.getPlayerManager().getEvils().remove(kingpinTarget);
-                ChatChannels.GLOBAL.removeFromChannel(((Player) kingpinTarget).getUniqueId());
-                ChatChannels.DEAD.addToChannel(((Player) kingpinTarget).getUniqueId());
-                if (Lobby.serialKiller == ((Player) kingpinTarget).getUniqueId()) Lobby.serialKiller = null;
+                ChatChannels.GLOBAL.removeFromChannel((kingpinTarget).getUniqueId());
+                ChatChannels.DEAD.addToChannel((kingpinTarget).getUniqueId());
+                if (Lobby.serialKiller == (kingpinTarget).getUniqueId()) Lobby.serialKiller = null;
                 plugin.getPlayerManager().getTownies().remove(kingpinTarget);
     }
 

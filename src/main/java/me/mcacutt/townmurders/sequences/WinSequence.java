@@ -46,7 +46,6 @@ public class WinSequence {
         plugin.getPlayerManager().getEvils().clear();
         plugin.getPlayerManager().getPlayersInGame().clear();
         plugin.getPlayerManager().getPlayersAlive().clear();
-        plugin.getPlayerManager().getPlayerNumberSet().clear();
         plugin.getPlayerManager().getPlayersDead().clear();
         plugin.getPlayerManager().getPlayersDeadLastNight().clear();
         Countdown endCountdown = Countdown.of(completeTask -> {

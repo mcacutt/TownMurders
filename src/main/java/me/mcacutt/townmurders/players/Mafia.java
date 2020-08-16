@@ -1,6 +1,7 @@
 package me.mcacutt.townmurders.players;
 
 import me.mcacutt.townmurders.roles.Role;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,23 @@ public class Mafia implements BaseGamePlayer {
     private boolean jailed = false;
     private boolean onStand = false;
     private boolean defense = false;
+    private UUID uuid;
+    private Role role;
+
+    @Override
+    public UUID getUUID() {
+        return this.uuid;
+    }
+
+    @Override
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public boolean guilty() {
@@ -29,6 +47,7 @@ public class Mafia implements BaseGamePlayer {
     @Override
     public Role getRole() { return Role.ADVISOR; }
 
+
     @Override
     public List<UUID> getVisits() {
         return visits;
@@ -37,6 +56,7 @@ public class Mafia implements BaseGamePlayer {
     public void addVisit(UUID uuid) {
         visits.add(uuid);
     }
+
 
 
     @Override

@@ -16,6 +16,21 @@ public class Townie implements BaseGamePlayer {
     private boolean jailed = false;
     private boolean onStand = false;
     private boolean defense = false;
+    private UUID uuid;
+
+    @Override
+    public UUID getUUID() { return this.uuid; }
+
+    @Override
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+
+    @Override
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public String getTeam() { return "Townie"; }

@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Kingpin extends Mafia {
 
     private final TownMurders plugin;
-    private Player kingpinTarget;
+    private static Player kingpinTarget;
 
     public Kingpin(final TownMurders plugin) {
         this.plugin = plugin;
@@ -75,7 +75,7 @@ public class Kingpin extends Mafia {
                 }
             }
 
-    public Player getKingpinTarget() {
-        return this.kingpinTarget;
+    public static Player getKingpinTarget() {
+        return kingpinTarget;
     }
 }

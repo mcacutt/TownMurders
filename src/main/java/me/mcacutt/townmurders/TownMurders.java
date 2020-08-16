@@ -167,4 +167,6 @@ public class TownMurders extends JavaPlugin implements PluginMessageListener {
         return target;
     }
 
+    public ExecuteAxe getAxe() { return axe; }
+
 }

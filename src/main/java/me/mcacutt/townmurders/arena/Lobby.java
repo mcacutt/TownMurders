@@ -6,7 +6,7 @@ import me.mcacutt.townmurders.players.BaseGamePlayer;
 import me.mcacutt.townmurders.players.Mafia;
 import me.mcacutt.townmurders.players.Neutral;
 import me.mcacutt.townmurders.players.Townie;
-import me.mcacutt.townmurders.roles.Roles;
+import me.mcacutt.townmurders.roles.Role;
 import me.mcacutt.townmurders.util.Countdown;
 import me.mcacutt.townmurders.util.RandomUtil;
 import me.mcacutt.townmurders.util.UtilPlayer;
@@ -28,6 +28,8 @@ public class Lobby extends ListenerBase {
     UUID currentUUID;
     public static UUID serialKiller;
     Countdown gameStartCountdown;
+    Townie townie;
+
     public Lobby(TownMurders plugin) {
         super(plugin);
     }
@@ -38,9 +40,7 @@ public class Lobby extends ListenerBase {
         if (plugin.getArena().isInProgress()) {
             event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_FULL);
         } else {
-            Townie townie = new Townie(uuid);
-            plugin.getPlayerManager().getPlayerNumberSet().add(townie);
-            plugin.getPlayerManager().getTownies().add(townie);
+            plugin.getPlayerManager().getTownies().add(uuid);
         }
     }
 
@@ -79,8 +79,6 @@ public class Lobby extends ListenerBase {
     public void onLeave(PlayerQuitEvent event) {
         UUID uuid = event.getPlayer().getUniqueId();
         Player player = event.getPlayer();
-        plugin.getPlayerManager().getPlayerNumberSet().remove(new Townie(uuid));
-     // plugin.getPlayerManager().getPlayerNumberSet().removeIf(townie -> townie.getUUID().equals(uuid));
         if (plugin.getPlayerManager().getPlayersInLobby().size() == PLAYERS_NEEDED) {
             plugin.getPlayerManager().getPlayersInLobby().remove(player);
             for (Player p : plugin.getPlayerManager().getPlayersInLobby()) {
@@ -98,10 +96,10 @@ public class Lobby extends ListenerBase {
         while (plugin.getPlayerManager().getEvils().size() < 4) {
             Random r = new Random();
             int result = r.nextInt(11);
-            plugin.getPlayerManager().getEvils().add(new Mafia(new ArrayList<>(plugin.getPlayerManager()
-                    .getPlayerNumberSet()).get(result).getUUID()));
-            plugin.getPlayerManager().getTownies().remove(new Townie(new ArrayList<>(plugin.getPlayerManager()
-                    .getPlayerNumberSet()).get(result).getUUID()));
+            plugin.getPlayerManager().getEvils().add(plugin.getPlayerManager()
+                    .getPlayersInLobby().get(result).getUniqueId());
+            plugin.getPlayerManager().getTownies().remove(plugin.getPlayerManager()
+                    .getPlayersInLobby().get(result).getUniqueId());
         }
     }
 
@@ -110,37 +108,28 @@ public class Lobby extends ListenerBase {
         boolean result = r.nextBoolean();
         if (result) {
             int playerResult = RandomUtil.getRandom().nextInt(11);
-            serialKiller = (new ArrayList<>(plugin.getPlayerManager().getPlayerNumberSet()).get(playerResult).getUUID());
-            plugin.getPlayerManager().getPlayerNumberSet().add(new Neutral(serialKiller));
-            plugin.getPlayerManager().getBasePlayer(serialKiller).addRole(Roles.SERIAL_KILLER);
-            if (plugin.getPlayerManager().getTownies().contains(serialKiller))
-                plugin.getPlayerManager().getTownies().remove(new Townie(new ArrayList<>(plugin.getPlayerManager()
-                        .getPlayerNumberSet()).get(playerResult).getUUID()));
-            if (plugin.getPlayerManager().getEvils().contains(serialKiller))
-                plugin.getPlayerManager().getEvils().remove(new Mafia(new ArrayList<>(plugin.getPlayerManager()
-                        .getPlayerNumberSet()).get(playerResult).getUUID()));
+            serialKiller = new ArrayList<UUID>(plugin.getPlayerManager().getTownies()).get(playerResult);
+            plugin.getPlayerManager().getBasePlayer(serialKiller).setRole(Role.SERIAL_KILLER);
+                plugin.getPlayerManager().getTownies().remove(serialKiller);
+                plugin.getPlayerManager().getEvils().remove(serialKiller);
         }
 
     }
 
     public void assignRoles() {
-        for (BaseGamePlayer player : plugin.getPlayerManager().getPlayerNumberSet()) {
-            if (!(player instanceof Mafia)) {
-                int result = 1 + RandomUtil.getRandom().nextInt(8);
-                for (Roles role : Roles.values()) {
-                    if (role.getRoleNumber() == result) {
-                        player.addRole(role);
+        int result;
+        for (Player player : plugin.getPlayerManager().getPlayersInLobby()) {
+            if (!(plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).getTeam().equals("Mafia"))) {
+                result = 1 + RandomUtil.getRandom().nextInt(8);
+            }
+            else {
+                result = 20 + RandomUtil.getRandom().nextInt(5);
+            }
+                for (Role role : Role.values()) {
+                    if (role.getRoleNum() == result) {
+                        plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).setRole(role);
                     }
                 }
-            }
-                else {
-                int result = 20 + RandomUtil.getRandom().nextInt(5);
-                for (Roles role : Roles.values()) {
-                    if (role.getRoleNumber() == result) {
-                        player.addRole(role);
-                }
-                }
-            }
         }
     }
 }

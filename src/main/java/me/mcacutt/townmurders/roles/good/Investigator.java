@@ -2,7 +2,7 @@ package me.mcacutt.townmurders.roles.good;
 
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.players.Townie;
-import me.mcacutt.townmurders.roles.Roles;
+import me.mcacutt.townmurders.roles.Role;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,20 +43,20 @@ public class Investigator extends Townie {
     }
 
     public void runRoleTask(Player player, Player target) {
-                Roles targetRole = plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole();
-                if (targetRole == Roles.DISTRACTOR || targetRole == Roles.ESCORT || targetRole == Roles.LOOKOUT) {
+                Role targetRole = plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole();
+                if (targetRole == Role.DISTRACTOR || targetRole == Role.ESCORT || targetRole == Role.LOOKOUT) {
                     player.sendMessage("Your Target Could Be A Distractor, Escort or Lookout");
                 }
-                if (targetRole == Roles.SHERIFF || targetRole == Roles.INVESTIGATOR || targetRole == Roles.ADVISOR) {
+                if (targetRole == Role.SHERIFF || targetRole == Role.INVESTIGATOR || targetRole == Role.ADVISOR) {
                     player.sendMessage("Your Target Could Be A Sheriff, Investigator or Advisor");
                 }
-                if (targetRole == Roles.SILENCER || targetRole == Roles.WHISPERER || targetRole == Roles.KINGPIN) {
+                if (targetRole == Role.SILENCER || targetRole == Role.WHISPERER || targetRole == Role.KINGPIN) {
                     player.sendMessage("Your Target Could Be A Silencer, Whisperer or Kingpin");
                 }
-                if (targetRole == Roles.JAILOR || targetRole == Roles.VIGILANTE || targetRole == Roles.GRUNT) {
+                if (targetRole == Role.JAILOR || targetRole == Role.VIGILANTE || targetRole == Role.GRUNT) {
                     player.sendMessage("Your Target Could Be A Jailor, Vigilante or Grunt");
                 }
-                if (targetRole == Roles.HUNTER || targetRole == Roles.MEDIC || targetRole == Roles.SERIAL_KILLER) {
+                if (targetRole == Role.HUNTER || targetRole == Role.MEDIC || targetRole == Role.SERIAL_KILLER) {
                     player.sendMessage("Your Target Could Be A Hunter, Medic or Serial Killer");
         };
     }

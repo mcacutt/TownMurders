@@ -5,6 +5,7 @@ import me.mcacutt.townmurders.arena.Lobby;
 import me.mcacutt.townmurders.arena.SpawnPoints;
 import me.mcacutt.townmurders.players.Townie;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
+import me.mcacutt.townmurders.roles.Role;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -51,19 +52,33 @@ public class Jailor extends Townie {
         this.jailedTarget = jailedTarget;
     }
 
-    private void runRoleTask2(Player player, Player jailedTarget) {
-        this.jailedTarget = jailedTarget;
-        if (jailedTarget == null) return;
-        jailedTarget.setHealth(0);
-        SpawnPoints spawns = new SpawnPoints(plugin);
-        spawns.tpPlayerToSpec(jailedTarget);
-        plugin.getPlayerManager().getPlayersDead().add(jailedTarget);
-        plugin.getPlayerManager().getPlayersAlive().remove(jailedTarget);
-        plugin.getPlayerManager().getPlayersDeadLastNight().add(jailedTarget);
-        plugin.getPlayerManager().getEvils().remove(jailedTarget);
-        ChatChannels.GLOBAL.removeFromChannel(jailedTarget.getUniqueId());
-        ChatChannels.DEAD.addToChannel(jailedTarget.getUniqueId());
-        if (Lobby.serialKiller == jailedTarget.getUniqueId()) Lobby.serialKiller = null;
-        plugin.getPlayerManager().getTownies().remove(jailedTarget);
+    public void runRoleTask(Player player, Player target) {
+        if(plugin.getAxe().getExecute()) {
+            this.jailedTarget = target;
+            if (target == null) return;
+            target.setHealth(0);
+            SpawnPoints spawns = new SpawnPoints(plugin);
+            spawns.tpPlayerToSpec(target);
+            plugin.getPlayerManager().getPlayersDead().add(target);
+            plugin.getPlayerManager().getPlayersAlive().remove(target);
+            plugin.getPlayerManager().getPlayersDeadLastNight().add(target);
+            plugin.getPlayerManager().getEvils().remove(target.getUniqueId());
+            ChatChannels.GLOBAL.removeFromChannel(target.getUniqueId());
+            ChatChannels.DEAD.addToChannel(target.getUniqueId());
+            if (Lobby.serialKiller == target.getUniqueId()) Lobby.serialKiller = null;
+            plugin.getPlayerManager().getTownies().remove(target.getUniqueId());
+        }
+        else if (plugin.getPlayerManager().getBasePlayer(target.getUniqueId()).getRole() == Role.SERIAL_KILLER) {
+            player.setHealth(0);
+            SpawnPoints spawns = new SpawnPoints(plugin);
+            spawns.tpPlayerToSpec(player);
+            plugin.getPlayerManager().getPlayersDead().add(player);
+            plugin.getPlayerManager().getPlayersAlive().remove(player);
+            plugin.getPlayerManager().getPlayersDeadLastNight().add(player);
+            plugin.getPlayerManager().getEvils().remove(player.getUniqueId());
+            ChatChannels.GLOBAL.removeFromChannel(player.getUniqueId());
+            ChatChannels.DEAD.addToChannel(player.getUniqueId());
+            plugin.getPlayerManager().getTownies().remove(player.getUniqueId());
+        }
     }
 }

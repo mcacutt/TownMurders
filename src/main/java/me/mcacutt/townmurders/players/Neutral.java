@@ -19,8 +19,20 @@ public class Neutral implements BaseGamePlayer {
     private boolean onStand = false;
     private boolean guilty = false;
     private boolean defense = true;
+    private UUID uuid;
 
+    @Override
+    public UUID getUUID() { return this.uuid; }
 
+    @Override
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public boolean guilty() { return false; }
@@ -28,7 +40,8 @@ public class Neutral implements BaseGamePlayer {
     @Override
     public String getTeam() { return "Neutral"; }
     @Override
-    public Role getRole() { return Role.ADVISOR; }
+    public Role getRole() { return role; }
+
 
     @Override
     public List<UUID> getVisits() {

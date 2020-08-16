@@ -2,6 +2,7 @@ package me.mcacutt.townmurders.sequences;
 
 import me.mcacutt.townmurders.TownMurders;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -14,10 +15,9 @@ public class EndOfNightSequence {
     }
 
     public void start() {
-        for (UUID uuid : plugin.getPlayerManager().getPlayersInGame()) {
-            plugin.getPlayerManager().getBasePlayer(uuid).getRole().getRoleAction()
-                    .ifPresent(roleActionBase -> roleActionBase.runRoleTask(Bukkit.getPlayer(uuid),
-                            plugin.getTarget().getTarget(Bukkit.getPlayer(uuid))));
+        for (Player player : plugin.getPlayerManager().getPlayersAlive()) {
+            Player target = plugin.getTarget().getTarget(player);
+            plugin.getPlayerManager().getBasePlayer(player.getUniqueId()).getRole().getBaseGamePlayer().runRoleTask(player, target);
         }
         plugin.getMorningSequence().start();
     }

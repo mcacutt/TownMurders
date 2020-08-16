@@ -2,7 +2,7 @@ package me.mcacutt.townmurders.sequences;
 
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
-import me.mcacutt.townmurders.roles.Roles;
+import me.mcacutt.townmurders.roles.Role;
 import me.mcacutt.townmurders.util.Countdown;
 import me.mcacutt.townmurders.util.UtilPlayer;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ public class DaySequence {
         for (UUID uuid : plugin.getPlayerManager().getPlayersInGame()) {
             Bukkit.getPlayer(uuid).playSound(Bukkit.getPlayer(uuid).getLocation(), Sound.WITHER_SPAWN, 1, 1);
             ChatChannels.GLOBAL.addToChannel(uuid);
-            if (plugin.getPlayerManager().getBasePlayer(uuid).getRole().equals(Roles.WHISPERER))
+            if (plugin.getPlayerManager().getBasePlayer(uuid).getRole().equals(Role.WHISPERER))
                 ChatChannels.WHISPER.addToChannel(uuid);
         }
         if (dayCount == 1) {

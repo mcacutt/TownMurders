@@ -2,7 +2,7 @@ package me.mcacutt.townmurders.sequences;
 
 import me.mcacutt.townmurders.TownMurders;
 import me.mcacutt.townmurders.players.chatchannels.ChatChannels;
-import me.mcacutt.townmurders.roles.Roles;
+import me.mcacutt.townmurders.roles.Role;
 import me.mcacutt.townmurders.util.Countdown;
 import me.mcacutt.townmurders.util.UtilPlayer;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class NightSequence {
 
-    private final TownMurders plugin;
+    private TownMurders plugin;
 
     private int nightCount;
 
@@ -33,19 +33,26 @@ public class NightSequence {
             Bukkit.getPlayer(uuid).playSound(Bukkit.getPlayer(uuid).getLocation(), Sound.WOLF_HOWL, 1, 1);
             Bukkit.getPlayer(uuid).playSound(Bukkit.getPlayer(uuid).getLocation(), Sound.EXPLODE, 1, 1);
             ChatChannels.GLOBAL.removeFromChannel(uuid);
-            plugin.getPlayerManager().getBasePlayer(uuid).getRole().isGood().ifPresent(aBoolean -> {
-                    if(!aBoolean || plugin.getPlayerManager().getBasePlayer(uuid).getRole().equals(Roles.WHISPERER)){
-                        ChatChannels.MAFIA.addToChannel(uuid);
-                    }
-            });
+            if (plugin.getPlayerManager().getBasePlayer(uuid).guilty() || plugin.getPlayerManager().getBasePlayer(uuid).getRole().equals(Role.WHISPERER)) {
+                ChatChannels.MAFIA.addToChannel(uuid);
+            }
+            if (plugin.getPlayerManager().getBasePlayer(uuid).isJailed() || plugin.getPlayerManager().getBasePlayer(uuid).getRole().equals(Role.JAILOR)) {
+                ChatChannels.JAIL.addToChannel(uuid);
+            }
         }
-
-        Countdown nightCountdown = Countdown.of(completeTask -> {
-            plugin.getDaySequence().setDayCount(plugin.getDaySequence().getDayCount() + 1);
-            plugin.getEndOfNightSequence().start();
-            completeTask.cancel();
-        }, 40);
     }
+
+    Countdown nightCountdown = Countdown.of(completeTask -> {
+        for (UUID uuid: plugin.getPlayerManager().getPlayersInGame()) {
+            ChatChannels.MAFIA.removeFromChannel(uuid);
+            ChatChannels.JAIL.removeFromChannel(uuid);
+            ChatChannels.GLOBAL.addToChannel(uuid);
+            plugin.getPlayerManager().getBasePlayer(uuid).setJailed(false);
+        }
+        plugin.getDaySequence().setDayCount(plugin.getDaySequence().getDayCount() + 1);
+        plugin.getEndOfNightSequence().start();
+        completeTask.cancel();
+    }, 40);
 
     public int getNightCount() {
         return nightCount;

@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 
 public class Countdown {
 
-    private final Consumer<Countdown> consumer;
     private final BukkitTask timerTask;
     private final AtomicInteger countdown;
     private final TownMurders plugin;
@@ -21,14 +20,11 @@ public class Countdown {
         cancelled = false;
         isPaused = false;
         plugin = JavaPlugin.getPlugin(TownMurders.class);
-        countdown = new AtomicInteger(seconds-1);
-        this.consumer = consumer;
+        countdown = new AtomicInteger(seconds - 1);
         timerTask = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             if(!cancelled) {
                 if (countdown.get() == 0) {
-                    if (consumer != null) {
-                        consumer.accept(Countdown.this);
-                    }
+                    consumer.accept(Countdown.this);
                     return;
                 }
                 if (!isPaused) {
@@ -41,6 +37,7 @@ public class Countdown {
 
     public void cancel() {
         cancelled = true;
+        timerTask.cancel();
     }
 
     public int getCurrentTime() { return countdown.get(); }
